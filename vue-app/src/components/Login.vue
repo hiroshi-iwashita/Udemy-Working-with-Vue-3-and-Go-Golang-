@@ -26,10 +26,6 @@
                         required="true">
                     </text-input>
 
-                    <hr />
-
-                    Email: {{email}}
-
                     <hr>
                     <input
                         type="submit"
@@ -46,6 +42,7 @@
 import FormTag from './forms/FormTag.vue'
 import TextInput from './forms/TextInput.vue'
 import { store } from '@/components/store.js'
+import router from '/./router/index.js'
 
 export default {
     name: 'login',
@@ -81,7 +78,8 @@ export default {
                     console.log("Error:", response.message);
                 } else {
                     console.log("Token:", response.data.token.token);
-                    store.token = response.data.token.token
+                    store.token = response.data.token.token;
+                    router.push("/");
                 }
             })
         }
