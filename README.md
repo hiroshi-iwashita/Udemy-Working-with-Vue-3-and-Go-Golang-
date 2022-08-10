@@ -19,3 +19,4 @@ $ vue create [app name]
 $ cd [app name]
 
 $ npm run serve
+at directory [vue-app]

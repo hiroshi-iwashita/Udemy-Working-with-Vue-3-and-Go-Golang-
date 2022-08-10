@@ -25,8 +25,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 ## npm
----
-### Vue Router
-https://router.vuejs.org/
+
+### Packages
+- [Vue Router](https://router.vuejs.org/)
 
 $ npm install vue-router@4
+
+### references
+- [Usage with v-model](https://vuejs.org/guide/components/events.html#usage-with-v-model)
