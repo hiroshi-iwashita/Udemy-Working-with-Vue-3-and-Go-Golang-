@@ -33,3 +33,4 @@ $ npm install vue-router@4
 
 ### references
 - [Usage with v-model](https://vuejs.org/guide/components/events.html#usage-with-v-model)
+- [State Management](https://vuejs.org/guide/scaling-up/state-management.html)
