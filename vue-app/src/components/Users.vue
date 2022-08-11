@@ -59,12 +59,14 @@
                             <td
                                 v-if="u.token.id > 0"
                             >
-                                <span
-                                    class="badge bg-success"
-                                    @click="logUserOut(u.id)"
-                                >
-                                    Logged in
-                                </span>
+                                <a href="javascript:void(0);">
+                                    <span
+                                        class="badge bg-success"
+                                        @click="logUserOut(u.id)"
+                                    >
+                                        Logged in
+                                    </span>
+                                </a>
                             </td>
                             <td
                                 v-else
@@ -132,29 +134,24 @@ export default {
                 notie.confirm({
                     text: "Are you sure you want to log this user out?",
                     submitText: "Log out",
-                    submitCallback: function() {
-                        console.log('would log out user id :', id)
-                        // let payload = {
-                        //     id: id,
-                        // }
-
-                        // fetch(
-                        //     `${process.env.VUE_APP_API_URL}/admin/users/delete`,
-                        //     Security.requestOptions(payload)
-                        // )
-                        // .then((response) => response.json())
-                        // .then((data) => {
-                        //     if (data.error) {
-                        //         this.$emit('error', data.message)
-                        //     } else {
-                        //         this.$emit('success', 'User deleted')
-                        //         router.push("/admin/users")
-                        //     }
-                        // })
+                    submitCallback: () => {
+                        fetch(
+                            `${process.env.VUE_APP_API_URL}/admin/log-user-out/${id}`,
+                            Security.requestOptions("")
+                        )
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.error) {
+                                this.$emit('error', data.message);
+                            } else {
+                                this.$emit('success', data.message);
+                                this.$emit('forceUpdate');
+                            }
+                        })
                     }
                 })
             } else {
-                this.$emit('error, you cannot log yourself out');
+                this.$emit('error', "you can't log yourself out");
             }
         }
     },
