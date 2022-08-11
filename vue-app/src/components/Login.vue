@@ -9,7 +9,6 @@
                     name="myform"
                     event="myevent"
                 >
-
                     <text-input
                         v-model="email"
                         label="Email"
@@ -43,6 +42,7 @@ import TextInput from './forms/TextInput.vue'
 import { store } from '@/components/store.js'
 import router from '/./router/index.js'
 import notie from 'notie'
+import Security from '@/components/security.js'
 
 export default {
     name: 'login',
@@ -58,20 +58,13 @@ export default {
     },
     methods: {
         submitHandler() {
-            console.log("submitHandler called - success!");
-
             const payload = {
                 email: this.email,
                 password: this.password,
                 store,
             }
 
-            const requestOptions = {
-                method: "POST",
-                body: JSON.stringify(payload),
-            }
-
-            fetch(`${process.env.VUE_APP_API_URL}/users/login`, requestOptions)
+            fetch(`${process.env.VUE_APP_API_URL}/users/login`, Security.requestOptions(payload))
             .then((response) => response.json())
             .then((response) => {
                 if (response.error) {
