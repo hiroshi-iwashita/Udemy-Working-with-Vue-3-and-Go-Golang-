@@ -193,10 +193,10 @@ export default {
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
-                    this.$emit('error', data.message)
+                    this.$emit('error', data.message);
                 } else {
-                    this.$emit('success', 'Changes saved')
-                    router.push("/admin/users")
+                    this.$emit('success', 'Changes saved');
+                    router.push("/admin/users");
                 }
             })
             .catch((error) => {
@@ -219,10 +219,10 @@ export default {
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {
-                            this.$emit('error', data.message)
+                            this.$emit('error', data.message);
                         } else {
-                            this.$emit('success', 'User deleted')
-                            router.push("/admin/users")
+                            this.$emit('success', 'User deleted');
+                            router.push("/admin/users");
                         }
                     })
                 }
