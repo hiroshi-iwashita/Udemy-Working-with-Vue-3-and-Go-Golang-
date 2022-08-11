@@ -59,6 +59,38 @@
                         :value="user.password"
                         name="password">
                     </text-input>
+
+                    <div class="form-check">
+                        <input
+                            v-model="user.active"
+                            class="form-check-input"
+                            type="radio"
+                            id="user-active"
+                            :value="1"
+                        >
+                        <label
+                            for="user-active"
+                            class="form-check-label"
+                        >
+                            Active
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            v-model="user.active"
+                            class="form-check-input"
+                            type="radio"
+                            id="user-active-2"
+                            :value="0"
+                        >
+                        <label
+                            for="user-active-2"
+                            class="form-check-label"
+                        >
+                            Inactive
+                        </label>
+                    </div>
+
                     <hr>
 
                     <div class="float-start">
@@ -134,6 +166,7 @@ export default {
                 last_name: "",
                 email: "",
                 password: "",
+                active: 0
             },
             store,
         }
@@ -150,6 +183,7 @@ export default {
                 last_name: this.user.last_name,
                 email: this.user.email,
                 password: this.user.password,
+                active: this.user.active,
             }
 
             fetch(
