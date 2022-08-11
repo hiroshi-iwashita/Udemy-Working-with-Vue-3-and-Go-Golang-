@@ -6,28 +6,32 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link
-                        v-if="store.token == ''"
-                        class="nav-link"
-                        to="/login"
-                    >
-                        Login
-                    </router-link>
-                    <a
-                        v-else
-                        href="javascript:void(0)"
-                        class="nav-link"
-                        @click="logout()"
-                    >
-                        Logout
-                    </a>
-                </li>
-            </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link
+                            v-if="store.token == ''"
+                            class="nav-link"
+                            to="/login"
+                        >
+                            Login
+                        </router-link>
+                        <a
+                            v-else
+                            href="javascript:void(0)"
+                            class="nav-link"
+                            @click="logout()"
+                        >
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+
+                <span class="navbar-text">
+                    {{ store.user.first_name ?? '' }}
+                </span>
             </div>
         </div>
     </nav>
@@ -59,14 +63,14 @@ export default {
             .then((response) => {
                 if (response.error) {
                     console.log("Error:", response.message);
-                    notie.alert({
-                        type: 'error',
-                        text: response.message,
-                        // stay: true,
-                        // position: 'bottom'
-                    })
                 } else {
                     store.token = "";
+                    store.user = {};
+
+                    document.cookie = '_site_data=; Path=/; '
+                        + 'SameSite=Strict; Secure; '
+                        + 'Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+
                     router.push("/login");
                 }
             })

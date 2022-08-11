@@ -47,7 +47,6 @@ export default {
         email: cookieData.user.email,
       }
     }
-
   },
 }
 </script>
