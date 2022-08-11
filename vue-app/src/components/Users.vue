@@ -19,6 +19,12 @@
                             <th>
                                 Email
                             </th>
+                            <th>
+                                Active
+                            </th>
+                            <th>
+                                Status
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,6 +42,37 @@
                             <td>
                                 {{u.email}}
                             </td>
+                            <td
+                                v-if="u.active === 1"
+                            >
+                                <span class="badge bg-success">
+                                    Active
+                                </span>
+                            </td>
+                            <td
+                                v-else
+                            >
+                                <span class="badge bg-danger">
+                                    Inactive
+                                </span>
+                            </td>
+                            <td
+                                v-if="u.token.id > 0"
+                            >
+                                <span
+                                    class="badge bg-success"
+                                    @click="logUserOut(u.id)"
+                                >
+                                    Logged in
+                                </span>
+                            </td>
+                            <td
+                                v-else
+                            >
+                                <span class="badge bg-danger">
+                                    Not Logged in
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -51,6 +88,7 @@
 <script>
 import Security from '@/components/security.js'
 import notie from 'notie'
+import { store } from '@/components/store.js'
 
 // function sleep(ms) {
 //     return new Promise(resolve => setTimeout(resolve, ms))
@@ -87,6 +125,38 @@ export default {
                 text: error,
             })
         });
+    },
+    methods: {
+        logUserOut(id) {
+            if (id !== store.user.id) {
+                notie.confirm({
+                    text: "Are you sure you want to log this user out?",
+                    submitText: "Log out",
+                    submitCallback: function() {
+                        console.log('would log out user id :', id)
+                        // let payload = {
+                        //     id: id,
+                        // }
+
+                        // fetch(
+                        //     `${process.env.VUE_APP_API_URL}/admin/users/delete`,
+                        //     Security.requestOptions(payload)
+                        // )
+                        // .then((response) => response.json())
+                        // .then((data) => {
+                        //     if (data.error) {
+                        //         this.$emit('error', data.message)
+                        //     } else {
+                        //         this.$emit('success', 'User deleted')
+                        //         router.push("/admin/users")
+                        //     }
+                        // })
+                    }
+                })
+            } else {
+                this.$emit('error, you cannot log yourself out');
+            }
+        }
     },
 }
 </script>
