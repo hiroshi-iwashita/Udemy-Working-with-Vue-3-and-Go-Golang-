@@ -18,13 +18,14 @@
                     >
                         Login
                     </router-link>
-                    <router-link
+                    <a
                         v-else
+                        href="javascript:void(0)"
                         class="nav-link"
-                        to="/logout"
+                        @click="logout()"
                     >
                         Logout
-                    </router-link>
+                    </a>
                 </li>
             </ul>
             </div>
@@ -34,11 +35,43 @@
 
 <script>
 import { store } from '@/components/store.js'
+import router from '/./router/index.js'
 
 export default {
     data() {
         return {
             store
+        }
+    },
+    methods: {
+        logout() {
+            const payload = {
+                token: store.token,
+            }
+
+            const requestOptions = {
+                method: "POST",
+                body: JSON.stringify(payload),
+            }
+
+            fetch("http://localhost:8081/users/logout", requestOptions)
+            .then((response) => response.json())
+            .then((response) => {
+                if (response.error) {
+                    console.log("Error:", response.message);
+                    notie.alert({
+                        type: 'error',
+                        text: response.message,
+                        // stay: true,
+                        // position: 'bottom'
+                    })
+                } else {
+                    store.token = "";
+                    router.push("/login");
+                }
+            })
+            store.token = ""
+            router.push("/login")
         }
     }
 }
