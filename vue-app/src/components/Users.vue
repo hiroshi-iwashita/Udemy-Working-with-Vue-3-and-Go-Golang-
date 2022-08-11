@@ -5,10 +5,12 @@
                 <h1 class="mt-3">
                     All Users
                 </h1>
-
                 <hr>
                 
-                <table class="table table-compact table-striped">
+                <table
+                    v-if="ready"
+                    class="table table-compact table-striped"
+                >
                     <thead>
                         <tr>
                             <th>
@@ -37,6 +39,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <p v-else>
+                    Loading ...
+                </p>
+
             </div>
         </div>
     </div>
@@ -46,10 +52,15 @@
 import Security from '@/components/security.js'
 import notie from 'notie'
 
+// function sleep(ms) {
+//     return new Promise(resolve => setTimeout(resolve, ms))
+// }
+
 export default {
     data() {
         return {
             users: [],
+            ready: false,
         }
     },
     beforeMount() {
@@ -64,7 +75,10 @@ export default {
                     text: response.message,
                 })
             } else {
-                this.users = response.data.users;
+                // sleep(3000).then(() => {
+                    this.users = response.data.users;
+                    this.ready = true
+                // });
             }
         })
         .catch((error) => {
