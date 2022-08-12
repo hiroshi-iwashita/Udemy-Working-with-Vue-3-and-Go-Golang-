@@ -49,23 +49,19 @@ export default {
             ready: false,
         }
     },
-    activated() {
+    mounted() {
         fetch(
             `${process.env.VUE_APP_API_URL}/books/${this.$route.params.bookName}`
         )
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    this.$emit('error', data.message)
-                } else {
-                    this.book = data.data;
-                    this.ready = true;
-                }
-            })
-        
-    },
-    deactivated() {
-        
-    },
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.error) {
+                this.$emit('error', data.message)
+            } else {
+                this.book = data.data;
+                this.ready = true;
+            }
+        })
+    }
 }
 </script>

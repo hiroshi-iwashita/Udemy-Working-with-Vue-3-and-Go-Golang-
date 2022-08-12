@@ -117,6 +117,7 @@
 import { store } from '@/components/store.js'
 
 export default {
+    name: 'Books',
     data() {
         return {
             store,
