@@ -5,7 +5,170 @@
                 <h1 class="mt-3">
                     Books
                 </h1>
+
+                <hr>
+
+                <div class="filters text-center"> <!-- display filter options for genre -->
+                    <span
+                        class="filter me-1"
+                        :class="{ active: currentFilter === 0 }"
+                        @click="setFilter(0)"
+                    >
+                        ALL
+                    </span>
+                    <span
+                        class="filter me-1"
+                        :class="{ active: currentFilter === 7 }"
+                        @click="setFilter(7)"
+                    >
+                        CLASSIC
+                    </span>
+                    <span
+                        class="filter me-1"
+                        :class="{ active: currentFilter === 2 }"
+                        @click="setFilter(2)"
+                    >
+                        FANTASY
+                    </span>
+                    <span
+                        class="filter me-1"
+                        :class="{ active: currentFilter === 6 }"
+                        @click="setFilter(6)"
+                    >
+                        HORROR
+                    </span>
+                    <span
+                        class="filter me-1"
+                        :class="{ active: currentFilter === 4 }"
+                        @click="setFilter(4)"
+                    >
+                        THRILLER
+                    </span>
+                    <span
+                        class="filter me-1"
+                        :class="{ active: currentFilter === 1 }"
+                        @click="setFilter(1)"
+                    >
+                        SCIENCE FICTION
+                    </span>
+                </div>  <!-- display filter options for genre -->
+
+                <hr>
+
+                <div> <!-- display books -->
+                    <div class="card-group">
+                        <div class="p-3 d-flex flex-wrap">
+                            <div
+                                v-for="b in this.books"
+                                :key="b.id"
+                            >
+                                <div
+                                    v-if="
+                                        b.genre_ids.includes(currentFilter)
+                                        || currentFilter === 0
+                                    "
+                                    class="card me-2 ms-1 mb-3"
+                                    style="width: 10rem"
+                                >
+                                    <img
+                                        :src="`${this.imgPath}/covers/${b.slug}.jpg`"
+                                        class="card-img-top"
+                                        :alt="`cover for ${b.title}`"
+                                    >
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">
+                                            {{ b.title }}
+                                        </h6>
+                                        <span class="book-author">
+                                            {{ b.author.author_name }}
+                                        </span>
+                                        <br>
+                                        <small
+                                            v-for="(g, index) in b.genres"
+                                            :key="g.id"
+                                            class="text-muted book-genre"
+                                        >
+                                        <em class="me-1">
+                                            {{g.genre_name}}
+                                            <template v-if="index !== (b.genres.length -1)">
+                                                ,
+                                            </template>
+                                        </em>
+                                    </small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- display books -->
+
             </div>
         </div>
     </div>
 </template>
+
+<script>
+import { store } from '@/components/store.js'
+
+export default {
+    data() {
+        return {
+            store,
+            ready: false,
+            imgPath: process.env.VUE_APP_IMAGE_URL,
+            books: {},
+            currentFilter: 0,
+        }
+    },
+    emits: ['error'],
+    beforeMount() {
+        fetch(
+            `${process.env.VUE_APP_API_URL}/books`
+        )
+        .then((response) => response.json())
+        .then((data) => {
+            if (this.error) {
+                this.$emit('error', data.message);
+            } else {
+               this.books = data.data.books;
+               this.ready = true;
+            }
+        })
+        .catch((error) => {
+            this.$emit('error', error)
+        })
+    },
+    methods: {
+        setFilter: function(filter) {
+            this.currentFilter = filter;
+        }
+    },
+}
+</script>
+
+<style scoped>
+.filters {
+    height: 2.5em;
+}
+
+.filter {
+    padding: 6px 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.35s;
+    border: 1px solid silver;
+}
+
+.filter.active {
+    background: lightgreen;
+}
+
+.filter:hover {
+    background: lightgray;
+}
+
+.book-author, .book-genre {
+    font-size: 0.8em;
+}
+</style>
