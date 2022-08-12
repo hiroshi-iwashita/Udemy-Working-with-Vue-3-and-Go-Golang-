@@ -49,7 +49,7 @@ export default {
             ready: false,
         }
     },
-    created() {
+    activated() {
         fetch(
             `${process.env.VUE_APP_API_URL}/books/${this.$route.params.bookName}`
         )
@@ -62,6 +62,10 @@ export default {
                     this.ready = true;
                 }
             })
-    }
+        
+    },
+    deactivated() {
+        
+    },
 }
 </script>
