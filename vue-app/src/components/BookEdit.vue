@@ -13,7 +13,7 @@
                     event="bookEditEvent"
                 >
                     <div
-                        v-if="this.book.slug !=''"
+                        v-if="this.book.slug !== ''"
                         class="mb-3"
                     >
                         <img
@@ -65,12 +65,12 @@
                         v-model="this.book.author_id"
                         :items="this.authors"
                         required="required"
-                        label="Author"
-                    ></select-input>
+                        label="Author">
+                    </select-input>
 
                     <text-input
                         v-model="book.publication_year"
-                        type="text"
+                        type="number"
                         required="true"
                         label="Publication Year"
                         :value="book.publication_year"
@@ -144,6 +144,7 @@
                             Delete
                         </a>
                     </div>
+                    <div class="clearfix"></div>
                 </form-tag>
             </div>
         </div>
@@ -166,8 +167,25 @@ export default {
         // get book for edit if id > 0 
         if (this.$route.params.bookId > 0) {
             // editing a book
-        } else {
-            // adding a book
+            fetch(
+                `${process.env.VUE_APP_API_URL}/admin/books/${this.$route.params.bookId}`,
+                Security.requestOptions("")
+            )
+            .then((response) => response.json())
+            .then((data) => {
+                // console.log(data.data)
+                if (data.error) {
+                    this.$emit('error', data.message);
+                } else {
+                    this.book = data.data;
+                    console.log(this.book)
+                    let genreArray = [];
+                    for (let i = 0; i < this.book.genres.length; i++) {
+                        genreArray.push(this.book.genres[i].id);
+                    }
+                    this.book.genre_ids = genreArray;
+                }
+            })
         }
 
         // get list of authors for drop down
@@ -196,7 +214,7 @@ export default {
                 id: 0,
                 title: "",
                 author_id: 0,
-                publication_year: 0,
+                publication_year: null,
                 description: "",
                 cover: "",
                 slug: "",
@@ -222,12 +240,14 @@ export default {
                 id: this.book.id,
                 title: this.book.title,
                 author_id : parseInt(this.book.author_id, 10),
-                publication_year: this.book.publication_year,
+                publication_year: parseInt(this.book.publication_year, 10),
                 description: this.book.description,
                 cover: this.book.cover,
                 slug: this.book.slug,
                 genre_ids: this.book.genre_ids,
             }
+
+            console.log(payload);
 
             fetch(
                 `${process.env.VUE_APP_API_URL}/admin/books/save`,
@@ -289,3 +309,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.book-cover {
+    max-width: 10em;
+}
+</style>
