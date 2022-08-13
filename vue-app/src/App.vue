@@ -11,7 +11,7 @@
         @forceUpdate="forceUpdate"
       >
         <keep-alive
-          include="Books"
+          include="BooksComposition"
         >
           <component :is="Component" />
         </keep-alive>
