@@ -24,7 +24,7 @@
             <option
                 v-for="option in items"
                 :key="option.value"
-                :value="option.text"
+                :value="option.value"
             >
                 {{option.text}}
             </option>
