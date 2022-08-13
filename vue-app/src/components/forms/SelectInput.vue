@@ -11,11 +11,20 @@
             class="form-select"
             :name="name"
             :required="required"
+            :multiple="multiple"
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
         >
+            <option
+                disabled
+                value=""
+            >
+                Choose...
+            </option>
             <option
                 v-for="option in items"
                 :key="option.value"
-                :value="option.value"
+                :value="option.text"
             >
                 {{option.text}}
             </option>
@@ -30,7 +39,10 @@ export default {
         "items",
         "name",
         "required",
-        "label"
+        "label",
+        "modelValue",
+        "multiple"
     ],
+    emits: ['update:modelValue'],
 }
 </script>
