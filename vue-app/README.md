@@ -41,3 +41,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [Mutliple warnings and deprecated dependencies on npm install vue/cli](https://github.com/vuejs/vue-cli/issues/5690)
 - [Modes and Environment Variables](https://cli.vuejs.org/guide/mode-and-env.html)
 - [Caddy / nginx](https://router.vuejs.org/guide/essentials/history-mode.html#native-node-js)
+- [UI Libraries](https://vue-community.org/guide/ecosystem/ui-libraries.html)
+- [Server Side Rendering](https://vue-community.org/guide/ecosystem/server-side-rendering.html#benefits-of-server-side-rendering-ssr)
+- [Nuxt.JS](https://nuxtjs.org/)
+- [Pinia](https://pinia.vuejs.org/)
