@@ -37,3 +37,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [Usage with v-model](https://vuejs.org/guide/components/events.html#usage-with-v-model)
 - [State Management](https://vuejs.org/guide/scaling-up/state-management.html)
 - [TransitionGroup](https://vuejs.org/guide/built-ins/transition-group.html)
+- [Composition API FAQ](https://vuejs.org/guide/extras/composition-api-faq.html)
